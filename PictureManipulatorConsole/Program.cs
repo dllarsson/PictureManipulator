@@ -17,10 +17,6 @@ namespace PictureManipulatorConsole
                 {
                     CreateCopysGrayscaleNegativeBlurred(picture);
                 }
-                else
-                {
-                    Console.WriteLine("Picture is too large!");
-                }
             }
             else
             {
@@ -32,24 +28,25 @@ namespace PictureManipulatorConsole
         public static void CreateCopysGrayscaleNegativeBlurred(Picture picture)
         {
 
-            Picture pictureNegative = new Picture(picture.ImageAdress);
-            pictureNegative.ConvertPictureToNegative();
-            string[] fileCopy = picture.ImageAdress.Split('.');
-            string ConvertedPictureAdress = fileCopy[0] + "_negative" + "." + fileCopy[1];
-            pictureNegative.Image.Save(ConvertedPictureAdress);
-
-            Picture pictureGrayscale = new Picture(picture.ImageAdress);
-            pictureGrayscale.ConvertPictureToGrayscale();
-            fileCopy = picture.ImageAdress.Split('.');
-            ConvertedPictureAdress = fileCopy[0] + "_grayscale" + "." + fileCopy[1];
-            pictureGrayscale.Image.Save(ConvertedPictureAdress);
+            //Picture pictureNegative = new Picture(picture.ImageAdress);
+            picture.ConvertPictureToNegative();
+            //string[] fileCopy = picture.ImageAdress.Split('.');
+            //string ConvertedPictureAdress = fileCopy[0] + "_negative" + "." + fileCopy[1];
+            picture.Image.Save(picture.ImageAdressCopy);
 
 
-            Picture pictureBlurred = new Picture(picture.ImageAdress);
-            pictureBlurred.CovertPictureToBlurr();
-            fileCopy = picture.ImageAdress.Split('.');
-            ConvertedPictureAdress = fileCopy[0] + "_blurred" + "." + fileCopy[1];
-            pictureBlurred.Image.Save(ConvertedPictureAdress);
+            //Picture pictureGrayscale = new Picture(picture.ImageAdress);
+            picture.ConvertPictureToGrayscale();
+            //fileCopy = picture.ImageAdress.Split('.');
+            //ConvertedPictureAdress = fileCopy[0] + "_grayscale" + "." + fileCopy[1];
+            picture.Image.Save(picture.ImageAdressCopy);
+
+
+            //Picture pictureBlurred = new Picture(picture.ImageAdress);
+            picture = picture.CovertPictureToBlurr();
+            //fileCopy = picture.ImageAdress.Split('.');
+            //ConvertedPictureAdress = fileCopy[0] + "_blurred" + "." + fileCopy[1];
+            picture.Image.Save(picture.ImageAdressCopy);
 
         }
     }

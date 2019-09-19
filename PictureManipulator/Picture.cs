@@ -7,6 +7,7 @@ namespace PictureManipulator
     public class Picture
     {
         public string ImageAdress { get; set; }
+        public string ImageAdressCopy { get; set; }
         public Bitmap Image { get; set; }
 
         public Picture(string imageAdress)
@@ -30,6 +31,7 @@ namespace PictureManipulator
             else
             {
                 Image = null;
+                Console.WriteLine("Image is too large");
             }
         }
 
@@ -50,7 +52,7 @@ namespace PictureManipulator
             }
             string[] imageName = ImageAdress.Split('.');
             string newImageName = imageName[0] + "_negative." + imageName[1];
-            ImageAdress = newImageName;
+            ImageAdressCopy = newImageName;
         }
 
         public void ConvertPictureToGrayscale()
@@ -73,7 +75,7 @@ namespace PictureManipulator
             }
             string[] imageName = ImageAdress.Split('.');
             string newImageName = imageName[0] + "_grayscale." + imageName[1];
-            ImageAdress = newImageName;
+            ImageAdressCopy = newImageName;
         }
 
         public Picture CovertPictureToBlurr()
@@ -281,7 +283,7 @@ namespace PictureManipulator
             }
             string[] imageName = ImageAdress.Split('.');
             string newImageName = imageName[0] + "_blurredPicture." + imageName[1];
-            tempPicture.ImageAdress = newImageName;
+            tempPicture.ImageAdressCopy = newImageName;
             return tempPicture;
 
         }
