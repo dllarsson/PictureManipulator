@@ -11,7 +11,7 @@ namespace PictureManipulator
         public string PictureAdressCopy { get; set; }
         public Bitmap Bitmap { get; set; }
         public Bitmap ConvertedBitmap { get; set; }
-        public Exception Exception { get; set; }
+        public String ErrorMessage { get; set; }
 
         public Picture(string pictureAdress)
         {
@@ -23,12 +23,12 @@ namespace PictureManipulator
             }
             catch (ArgumentException e)
             {
-                Exception = e;
+                ErrorMessage = e.Message;
                 return;
             }
-            if (!(Bitmap.Width < 1000) && (Bitmap.Height < 1000))
+            if ((Bitmap.Width >= 1000) && (Bitmap.Height >= 1000))
             {
-                
+                ErrorMessage = "Image is too large. Max is 1000x1000px";
                 Bitmap = null;
             }
         }

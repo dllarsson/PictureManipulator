@@ -37,6 +37,7 @@
             this.btnConvert = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.btnSave = new System.Windows.Forms.Button();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pbSourcePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbConvertedPicture)).BeginInit();
             this.SuspendLayout();
@@ -166,6 +167,7 @@
         private System.Windows.Forms.Button btnConvert;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
     }
 }
 

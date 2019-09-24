@@ -18,8 +18,11 @@ namespace PictureManipulatorFormsApp
         public PictureManipulatorForm()
         {
             InitializeComponent();
-            btnConvert.Visible = false;
-            btnSave.Visible = false;
+            btnConvert.Enabled = false;
+            btnSave.Enabled = false;
+            rbGrayscale.Enabled = false;
+            rbNegative.Enabled = false;
+            rbBlurr.Enabled = false;
         }
 
         private void BtnImportPicture_Click(object sender, EventArgs e)
@@ -31,11 +34,14 @@ namespace PictureManipulatorFormsApp
                 pbSourcePicture.Image = picture.Bitmap;
                 if (picture.Bitmap != null)
                 {
-                    btnConvert.Visible = true;
+                    btnConvert.Enabled = true;
+                    rbGrayscale.Enabled = true;
+                    rbNegative.Enabled = true;
+                    rbBlurr.Enabled = true;
                 }
                 else
                 {
-                    MessageBox.Show("Image is too large");
+                    MessageBox.Show(picture.ErrorMessage);
                 }
             }
         }
@@ -46,7 +52,7 @@ namespace PictureManipulatorFormsApp
             {
                 Picture picture = new Picture(PictureAdress);
                 picture.ConvertPictureToGrayscale();
-                pbConvertedPicture.Image = picture.Bitmap;
+                pbConvertedPicture.Image = picture.ConvertedBitmap;
                 ConvertedPictureAdress = picture.PictureAdressCopy;
 
             }
@@ -55,7 +61,7 @@ namespace PictureManipulatorFormsApp
             {
                 Picture picture = new Picture(PictureAdress);
                 picture.ConvertPictureToNegative();
-                pbConvertedPicture.Image = picture.Bitmap;
+                pbConvertedPicture.Image = picture.ConvertedBitmap;
                 ConvertedPictureAdress = picture.PictureAdressCopy;
 
 
@@ -65,15 +71,20 @@ namespace PictureManipulatorFormsApp
             {
                 Picture picture = new Picture(PictureAdress);
                 picture.ConvertPictureToBlurr();
-                pbConvertedPicture.Image = picture.Bitmap;
+                pbConvertedPicture.Image = picture.ConvertedBitmap;
                 ConvertedPictureAdress = picture.PictureAdressCopy;
             }
-            btnSave.Visible = true;
+            btnSave.Enabled = true;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            pbConvertedPicture.Image.Save(ConvertedPictureAdress);
+            string[] adressSplitted = ConvertedPictureAdress.Split('\\');
+            saveFileDialog.FileName = adressSplitted[adressSplitted.Length - 1];
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                pbConvertedPicture.Image.Save(saveFileDialog.FileName);
+            }
         }
     }
 }
