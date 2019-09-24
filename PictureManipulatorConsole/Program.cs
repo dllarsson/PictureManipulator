@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using PictureManipulator;
 
 namespace PictureManipulatorConsole
@@ -13,7 +14,7 @@ namespace PictureManipulatorConsole
                 Console.Write("Image path: ");
                 string adress = Console.ReadLine();
                 Picture picture = new Picture(adress);
-                if (picture.Image != null)
+                if (picture.Bitmap != null)
                 {
                     CreateCopysGrayscaleNegativeBlurred(picture);
                 }
@@ -27,27 +28,14 @@ namespace PictureManipulatorConsole
 
         public static void CreateCopysGrayscaleNegativeBlurred(Picture picture)
         {
-
-            //Picture pictureNegative = new Picture(picture.ImageAdress);
             picture.ConvertPictureToNegative();
-            //string[] fileCopy = picture.ImageAdress.Split('.');
-            //string ConvertedPictureAdress = fileCopy[0] + "_negative" + "." + fileCopy[1];
-            picture.Image.Save(picture.ImageAdressCopy);
+            picture.Bitmap.Save(picture.PictureAdressCopy);
 
-
-            //Picture pictureGrayscale = new Picture(picture.ImageAdress);
             picture.ConvertPictureToGrayscale();
-            //fileCopy = picture.ImageAdress.Split('.');
-            //ConvertedPictureAdress = fileCopy[0] + "_grayscale" + "." + fileCopy[1];
-            picture.Image.Save(picture.ImageAdressCopy);
+            picture.Bitmap.Save(picture.PictureAdressCopy);
 
-
-            //Picture pictureBlurred = new Picture(picture.ImageAdress);
-            picture = picture.CovertPictureToBlurr();
-            //fileCopy = picture.ImageAdress.Split('.');
-            //ConvertedPictureAdress = fileCopy[0] + "_blurred" + "." + fileCopy[1];
-            picture.Image.Save(picture.ImageAdressCopy);
-
+            picture.ConvertPictureToBlurr();
+            picture.Bitmap.Save(picture.PictureAdressCopy);
         }
     }
 }

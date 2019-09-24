@@ -43,25 +43,30 @@
             // 
             // pbSourcePicture
             // 
-            this.pbSourcePicture.Location = new System.Drawing.Point(12, 91);
+            this.pbSourcePicture.Location = new System.Drawing.Point(14, 114);
+            this.pbSourcePicture.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pbSourcePicture.Name = "pbSourcePicture";
-            this.pbSourcePicture.Size = new System.Drawing.Size(300, 300);
+            this.pbSourcePicture.Size = new System.Drawing.Size(338, 375);
+            this.pbSourcePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbSourcePicture.TabIndex = 0;
             this.pbSourcePicture.TabStop = false;
             // 
             // pbConvertedPicture
             // 
-            this.pbConvertedPicture.Location = new System.Drawing.Point(488, 91);
+            this.pbConvertedPicture.Location = new System.Drawing.Point(549, 114);
+            this.pbConvertedPicture.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pbConvertedPicture.Name = "pbConvertedPicture";
-            this.pbConvertedPicture.Size = new System.Drawing.Size(300, 300);
+            this.pbConvertedPicture.Size = new System.Drawing.Size(338, 375);
+            this.pbConvertedPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbConvertedPicture.TabIndex = 1;
             this.pbConvertedPicture.TabStop = false;
             // 
             // btnImportPicture
             // 
-            this.btnImportPicture.Location = new System.Drawing.Point(110, 397);
+            this.btnImportPicture.Location = new System.Drawing.Point(124, 496);
+            this.btnImportPicture.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnImportPicture.Name = "btnImportPicture";
-            this.btnImportPicture.Size = new System.Drawing.Size(75, 23);
+            this.btnImportPicture.Size = new System.Drawing.Size(84, 29);
             this.btnImportPicture.TabIndex = 2;
             this.btnImportPicture.Text = "Import";
             this.btnImportPicture.UseVisualStyleBackColor = true;
@@ -72,9 +77,10 @@
             this.rbGrayscale.AutoSize = true;
             this.rbGrayscale.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.rbGrayscale.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rbGrayscale.Location = new System.Drawing.Point(319, 116);
+            this.rbGrayscale.Location = new System.Drawing.Point(359, 145);
+            this.rbGrayscale.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbGrayscale.Name = "rbGrayscale";
-            this.rbGrayscale.Size = new System.Drawing.Size(93, 21);
+            this.rbGrayscale.Size = new System.Drawing.Size(105, 24);
             this.rbGrayscale.TabIndex = 3;
             this.rbGrayscale.TabStop = true;
             this.rbGrayscale.Text = "Grayscale";
@@ -83,9 +89,10 @@
             // rbNegative
             // 
             this.rbNegative.AutoSize = true;
-            this.rbNegative.Location = new System.Drawing.Point(319, 143);
+            this.rbNegative.Location = new System.Drawing.Point(359, 179);
+            this.rbNegative.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbNegative.Name = "rbNegative";
-            this.rbNegative.Size = new System.Drawing.Size(85, 21);
+            this.rbNegative.Size = new System.Drawing.Size(96, 24);
             this.rbNegative.TabIndex = 4;
             this.rbNegative.TabStop = true;
             this.rbNegative.Text = "Negative";
@@ -94,9 +101,10 @@
             // rbBlurr
             // 
             this.rbBlurr.AutoSize = true;
-            this.rbBlurr.Location = new System.Drawing.Point(319, 170);
+            this.rbBlurr.Location = new System.Drawing.Point(359, 212);
+            this.rbBlurr.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbBlurr.Name = "rbBlurr";
-            this.rbBlurr.Size = new System.Drawing.Size(59, 21);
+            this.rbBlurr.Size = new System.Drawing.Size(67, 24);
             this.rbBlurr.TabIndex = 5;
             this.rbBlurr.TabStop = true;
             this.rbBlurr.Text = "Blurr";
@@ -104,9 +112,10 @@
             // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(319, 198);
+            this.btnConvert.Location = new System.Drawing.Point(359, 248);
+            this.btnConvert.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnConvert.Name = "btnConvert";
-            this.btnConvert.Size = new System.Drawing.Size(75, 23);
+            this.btnConvert.Size = new System.Drawing.Size(84, 29);
             this.btnConvert.TabIndex = 6;
             this.btnConvert.Text = "Convert";
             this.btnConvert.UseVisualStyleBackColor = true;
@@ -114,9 +123,10 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(613, 397);
+            this.btnSave.Location = new System.Drawing.Point(690, 496);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.Size = new System.Drawing.Size(84, 29);
             this.btnSave.TabIndex = 7;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -124,9 +134,9 @@
             // 
             // PictureManipulatorForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(900, 562);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.rbBlurr);
@@ -135,6 +145,7 @@
             this.Controls.Add(this.btnImportPicture);
             this.Controls.Add(this.pbConvertedPicture);
             this.Controls.Add(this.pbSourcePicture);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "PictureManipulatorForm";
             this.Text = "PictureManipulator";
             ((System.ComponentModel.ISupportInitialize)(this.pbSourcePicture)).EndInit();

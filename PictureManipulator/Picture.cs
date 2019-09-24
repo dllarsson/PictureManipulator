@@ -1,18 +1,19 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace PictureManipulator
 {
     public class Picture
     {
-        public string ImageAdress { get; set; }
-        public string ImageAdressCopy { get; set; }
-        public Bitmap Image { get; set; }
+        public string PictureAdress { get; set; }
+        public string PictureAdressCopy { get; set; }
+        public Bitmap Bitmap { get; set; }
 
         public Picture(string imageAdress)
         {
-            ImageAdress = imageAdress;
+            PictureAdress = imageAdress;
             Bitmap image = null;
             try
             {
@@ -26,11 +27,11 @@ namespace PictureManipulator
             }
             if ((image.Width < 1000) && (image.Height < 1000))
             {
-                Image = image;
+                Bitmap = image;
             }
             else
             {
-                Image = null;
+                Bitmap = null;
                 Console.WriteLine("Image is too large");
             }
         }
@@ -38,31 +39,31 @@ namespace PictureManipulator
         public void ConvertPictureToNegative()
         {
             int x, y;
-            for (x = 0; x < Image.Width; x++)
+            for (x = 0; x < Bitmap.Width; x++)
             {
-                for (y = 0; y < Image.Height; y++)
+                for (y = 0; y < Bitmap.Height; y++)
                 {
-                    var pixel = Image.GetPixel(x, y);
+                    var pixel = Bitmap.GetPixel(x, y);
                     int r = 255 - pixel.R;
                     int g = 255 - pixel.G;
                     int b = 255 - pixel.B;
                     Color newPixel = Color.FromArgb(r, g, b);
-                    Image.SetPixel(x, y, newPixel);
+                    Bitmap.SetPixel(x, y, newPixel);
                 }
             }
-            string[] imageName = ImageAdress.Split('.');
-            string newImageName = imageName[0] + "_negative." + imageName[1];
-            ImageAdressCopy = newImageName;
+            string[] pictureAdress = PictureAdress.Split('.');
+            string newPictureName = pictureAdress[0] + "_negative." + pictureAdress[1];
+            PictureAdressCopy = newPictureName;
         }
 
         public void ConvertPictureToGrayscale()
         {
             int x, y;
-            for (x = 0; x < Image.Width; x++)
+            for (x = 0; x < Bitmap.Width; x++)
             {
-                for (y = 0; y < Image.Height; y++)
+                for (y = 0; y < Bitmap.Height; y++)
                 {
-                    var pixel = Image.GetPixel(x, y);
+                    var pixel = Bitmap.GetPixel(x, y);
                     int r = pixel.R;
                     int g = pixel.G;
                     int b = pixel.B;
@@ -70,223 +71,90 @@ namespace PictureManipulator
                     int grayScaleValue = (r + g + b) / 3;
 
                     Color newPixel = Color.FromArgb(grayScaleValue, grayScaleValue, grayScaleValue);
-                    Image.SetPixel(x, y, newPixel);
+                    Bitmap.SetPixel(x, y, newPixel);
                 }
             }
-            string[] imageName = ImageAdress.Split('.');
-            string newImageName = imageName[0] + "_grayscale." + imageName[1];
-            ImageAdressCopy = newImageName;
+            string[] pictureAdress = PictureAdress.Split('.');
+            string newPictureName = pictureAdress[0] + "_grayscale." + pictureAdress[1];
+            PictureAdressCopy = newPictureName;
         }
 
-        public Picture CovertPictureToBlurr()
+        public void ConvertPictureToBlurr()
         {
-            Picture tempPicture = new Picture(ImageAdress);
-            tempPicture.Image = Image;
+            Bitmap tempBitmap = new Bitmap(Bitmap.Width,Bitmap.Height);
             int x, y;
-            Color[] blurBoxPixels = new Color[9];
-            Color[] cornerPixels = new Color[4];
-            Color[] indexOn0Pixels = new Color[6];
-            for (x = 0; x < Image.Width - 1; x++)
+            var pixels = new List<Color>();
+            for (x = 0; x < Bitmap.Width; x++)
             {
-
-                for (y = 0; y < Image.Height - 1; y++)
+                for (y = 0; y < Bitmap.Height; y++)
                 {
-                    var pixel = Image.GetPixel(x, y);
-                    if ((x > 0 && y > 0) && (x < Image.Height && y < Image.Width))
+
+                    if (x != 0)
                     {
-                        blurBoxPixels[0] = Image.GetPixel(x - 1, y - 1);
-                        blurBoxPixels[1] = Image.GetPixel(x - 1, y);
-                        blurBoxPixels[2] = Image.GetPixel(x - 1, y + 1);
-
-                        blurBoxPixels[3] = Image.GetPixel(x, y - 1);
-                        blurBoxPixels[4] = Image.GetPixel(x, y);
-                        blurBoxPixels[5] = Image.GetPixel(x, y + 1);
-
-                        blurBoxPixels[6] = Image.GetPixel(x + 1, y - 1);
-                        blurBoxPixels[7] = Image.GetPixel(x + 1, y);
-                        blurBoxPixels[8] = Image.GetPixel(x + 1, y + 1);
-
-                        var r = 0;
-                        var g = 0;
-                        var b = 0;
-
-                        for (int i = 0; i < 9; i++)
-                        {
-                            r = r + blurBoxPixels[i].R;
-                            g = g + blurBoxPixels[i].G;
-                            b = b + blurBoxPixels[i].B;
-                        }
-
-                        r = r / 9;
-                        g = g / 9;
-                        b = b / 9;
-
-                        Color c = Color.FromArgb(r, g, b);
-                        tempPicture.Image.SetPixel(x, y, c);
+                        pixels.Add(Bitmap.GetPixel(x - 1, y));
                     }
-                    else  // The first and last pixel of x and y array
+                    if (y != 0)
                     {
-                        if (x == 0) // If x is first or last pixel;
-                        {
-                            if (y == 0)
-                            {
-                                cornerPixels[0] = Image.GetPixel(x, y);
-                                cornerPixels[1] = Image.GetPixel(x, y + 1);
-                                cornerPixels[2] = Image.GetPixel(x + 1, y);
-                                cornerPixels[3] = Image.GetPixel(x + 1, y + 1);
-
-                                var r = 0;
-                                var g = 0;
-                                var b = 0;
-
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    r = r + cornerPixels[i].R;
-                                    g = g + cornerPixels[i].G;
-                                    b = b + cornerPixels[i].B;
-                                }
-                                r = r / 4;
-                                g = g / 4;
-                                b = b / 4;
-                                Color c = Color.FromArgb(r, g, b);
-                                tempPicture.Image.SetPixel(x, y, c);
-                            }
-                            else if (y == Image.Height - 2)
-                            {
-                                y++;
-
-                                cornerPixels[0] = Image.GetPixel(x, y);
-                                cornerPixels[1] = Image.GetPixel(x, y - 1);
-                                cornerPixels[2] = Image.GetPixel(x + 1, y);
-                                cornerPixels[3] = Image.GetPixel(x + 1, y - 1);
-                                var r = 0;
-                                var g = 0;
-                                var b = 0;
-
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    r = r + cornerPixels[i].R;
-                                    g = g + cornerPixels[i].G;
-                                    b = b + cornerPixels[i].B;
-                                }
-                                r = r / 4;
-                                g = g / 4;
-                                b = b / 4;
-                                Color c = Color.FromArgb(r, g, b);
-                                tempPicture.Image.SetPixel(x, y, c);
-
-                            }
-                            else
-                            {
-                                indexOn0Pixels[0] = Image.GetPixel(x, y);
-                                indexOn0Pixels[1] = Image.GetPixel(x, y - 1);
-                                indexOn0Pixels[2] = Image.GetPixel(x, y + 1);
-                                indexOn0Pixels[3] = Image.GetPixel(x + 1, y);
-                                indexOn0Pixels[4] = Image.GetPixel(x + 1, y - 1);
-                                indexOn0Pixels[5] = Image.GetPixel(x + 1, y + 1);
-
-                                var r = 0;
-                                var g = 0;
-                                var b = 0;
-
-                                for (int i = 0; i < 6; i++)
-                                {
-                                    r = r + indexOn0Pixels[i].R;
-                                    g = g + indexOn0Pixels[i].G;
-                                    b = b + indexOn0Pixels[i].B;
-                                }
-                                r = r / 6;
-                                g = g / 6;
-                                b = b / 6;
-                                Color c = Color.FromArgb(r, g, b);
-                                tempPicture.Image.SetPixel(x, y, c);
-                            }
-                        }
-                        else if (x == Image.Width - 2)
-                        {
-                            x++;
-                            if (y == 0)
-                            {
-                                cornerPixels[0] = Image.GetPixel(x, y);
-                                cornerPixels[1] = Image.GetPixel(x, y + 1);
-                                cornerPixels[2] = Image.GetPixel(x - 1, y);
-                                cornerPixels[3] = Image.GetPixel(x - 1, y + 1);
-                                var r = 0;
-                                var g = 0;
-                                var b = 0;
-
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    r = r + cornerPixels[i].R;
-                                    g = g + cornerPixels[i].G;
-                                    b = b + cornerPixels[i].B;
-                                }
-                                r = r / 4;
-                                g = g / 4;
-                                b = b / 4;
-                                Color c = Color.FromArgb(r, g, b);
-                                tempPicture.Image.SetPixel(x, y, c);
-                            }
-                            else if (y == Image.Height - 2)
-                            {
-                                y++;
-                                cornerPixels[0] = Image.GetPixel(x, y);
-                                cornerPixels[1] = Image.GetPixel(x, y - 1);
-                                cornerPixels[2] = Image.GetPixel(x - 1, y);
-                                cornerPixels[3] = Image.GetPixel(x - 1, y - 1);
-
-                                var r = 0;
-                                var g = 0;
-                                var b = 0;
-
-                                for (int i = 0; i < 4; i++)
-                                {
-                                    r = r + cornerPixels[i].R;
-                                    g = g + cornerPixels[i].G;
-                                    b = b + cornerPixels[i].B;
-                                }
-                                r = r / 4;
-                                g = g / 4;
-                                b = b / 4;
-                                Color c = Color.FromArgb(r, g, b);
-                                tempPicture.Image.SetPixel(x, y, c);
-                            }
-                        }
-                        else if ((x > 0) && (x < Image.Width -1))
-                        {
-                            indexOn0Pixels[0] = Image.GetPixel(x, y + 1);
-                            indexOn0Pixels[1] = Image.GetPixel(x - 1, y + 1);
-                            indexOn0Pixels[2] = Image.GetPixel(x + 1, y + 1);
-                            indexOn0Pixels[3] = Image.GetPixel(x, y);
-                            indexOn0Pixels[4] = Image.GetPixel(x - 1, y);
-                            indexOn0Pixels[5] = Image.GetPixel(x + 1, y);
-
-                            var r = 0;
-                            var g = 0;
-                            var b = 0;
-
-                            for (int i = 0; i < 6; i++)
-                            {
-                                r = r + indexOn0Pixels[i].R;
-                                g = g + indexOn0Pixels[i].G;
-                                b = b + indexOn0Pixels[i].B;
-                            }
-                            r = r / 6;
-                            g = g / 6;
-                            b = b / 6;
-                            Color c = Color.FromArgb(r, g, b);
-                            tempPicture.Image.SetPixel(x, y, c);
-
-                        }
+                        pixels.Add(Bitmap.GetPixel(x, y - 1));
                     }
+                    if (x != 0 && y != 0)
+                    {
+                        pixels.Add(Bitmap.GetPixel(x - 1, y - 1));
+                    }
+                    if (x != 0 && y != Bitmap.Height - 1)
+                    {
+                        pixels.Add(Bitmap.GetPixel(x - 1, y + 1));
+                    }
+                    if (y != Bitmap.Height - 1)
+                    {
+                        pixels.Add(Bitmap.GetPixel(x, y + 1));
+                    }
+                    if (x != Bitmap.Width - 1)
+                    {
+                        pixels.Add(Bitmap.GetPixel(x + 1, y));
+                    }
+                    if (x != Bitmap.Width - 1 && y != 0)
+                    {
+                        pixels.Add(Bitmap.GetPixel(x + 1, y - 1));
+                    }
+                    if (x != Bitmap.Width - 1 && y != Bitmap.Height - 1)
+                    {
+                        pixels.Add(Bitmap.GetPixel(x + 1, y + 1));
+                    }
+                    pixels.Add(Bitmap.GetPixel(x, y));
+
+
+                    int listSize = pixels.Count;
+
+                    var r = 0;
+                    var g = 0;
+                    var b = 0;
+
+                    for (int i = 0; i < listSize; i++)
+                    {
+                        r = r + pixels[i].R;
+                        g = g + pixels[i].G;
+                        b = b + pixels[i].B;
+                    }
+
+                    r = r / listSize;
+                    g = g / listSize;
+                    b = b / listSize;
+
+                    Color c = Color.FromArgb(r, g, b);
+                    tempBitmap.SetPixel(x, y, c);
+                    pixels.Clear();
                 }
             }
-            string[] imageName = ImageAdress.Split('.');
-            string newImageName = imageName[0] + "_blurredPicture." + imageName[1];
-            tempPicture.ImageAdressCopy = newImageName;
-            return tempPicture;
 
+            string[] pictureAdress = PictureAdress.Split('.');
+            string newPictureAdress = pictureAdress[0] + "_blurred." + pictureAdress[1];
+            PictureAdressCopy = newPictureAdress;
+            Bitmap = tempBitmap;
         }
+
+
+
 
     }
 }

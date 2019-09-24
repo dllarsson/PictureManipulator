@@ -28,8 +28,8 @@ namespace PictureManipulatorFormsApp
             {
                 PictureAdress = openFileDialog.FileName;
                 Picture picture = new Picture(PictureAdress);
-                pbSourcePicture.Image = picture.Image;
-                if (picture.Image != null)
+                pbSourcePicture.Image = picture.Bitmap;
+                if (picture.Bitmap != null)
                 {
                     btnConvert.Visible = true;
                 }
@@ -46,30 +46,27 @@ namespace PictureManipulatorFormsApp
             {
                 Picture picture = new Picture(PictureAdress);
                 picture.ConvertPictureToGrayscale();
-                pbConvertedPicture.Image = picture.Image;
+                pbConvertedPicture.Image = picture.Bitmap;
+                ConvertedPictureAdress = picture.PictureAdressCopy;
 
-                string[] fileCopy = PictureAdress.Split('.');
-                ConvertedPictureAdress = fileCopy[0] + "_grayscale" + "." + fileCopy[1];
             }
 
             else if (rbNegative.Checked)
             {
                 Picture picture = new Picture(PictureAdress);
                 picture.ConvertPictureToNegative();
-                pbConvertedPicture.Image = picture.Image;
+                pbConvertedPicture.Image = picture.Bitmap;
+                ConvertedPictureAdress = picture.PictureAdressCopy;
 
-                string[] fileCopy = PictureAdress.Split('.');
-                ConvertedPictureAdress = fileCopy[0] + "_negative" + "." + fileCopy[1];
+
             }
 
             else if (rbBlurr.Checked)
             {
                 Picture picture = new Picture(PictureAdress);
-                picture.CovertPictureToBlurr();
-                pbConvertedPicture.Image = picture.Image;
-
-                string[] fileCopy = PictureAdress.Split('.');
-                ConvertedPictureAdress = fileCopy[0] + "_blurred" + "." + fileCopy[1];
+                picture.ConvertPictureToBlurr();
+                pbConvertedPicture.Image = picture.Bitmap;
+                ConvertedPictureAdress = picture.PictureAdressCopy;
             }
             btnSave.Visible = true;
         }
