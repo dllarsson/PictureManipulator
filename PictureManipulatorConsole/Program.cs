@@ -16,26 +16,29 @@ namespace PictureManipulatorConsole
                 Picture picture = new Picture(adress);
                 if (picture.Bitmap != null)
                 {
-                    CreateCopysGrayscaleNegativeBlurred(picture);
+                    picture.ConvertPictureToNegative();
+                    picture.ConvertedBitmap.Save(picture.PictureAdressCopy);
+                    picture.ConvertPictureToGrayscale();
+                    picture.ConvertedBitmap.Save(picture.PictureAdressCopy);
+                    picture.ConvertPictureToBlurr();
+                    picture.ConvertedBitmap.Save(picture.PictureAdressCopy);
+                }
+                else
+                {
+
                 }
             }
             else
             {
                 Picture picture = new Picture(args[0]);
-                CreateCopysGrayscaleNegativeBlurred(picture);
+
+                picture.ConvertPictureToNegative();
+                picture.SavePicture();
+                picture.ConvertPictureToGrayscale();
+                picture.SavePicture();
+                picture.ConvertPictureToBlurr();
+                picture.SavePicture();
             }
-        }
-
-        public static void CreateCopysGrayscaleNegativeBlurred(Picture picture)
-        {
-            picture.ConvertPictureToNegative();
-            picture.Bitmap.Save(picture.PictureAdressCopy);
-
-            picture.ConvertPictureToGrayscale();
-            picture.Bitmap.Save(picture.PictureAdressCopy);
-
-            picture.ConvertPictureToBlurr();
-            picture.Bitmap.Save(picture.PictureAdressCopy);
         }
     }
 }

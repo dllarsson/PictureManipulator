@@ -23,6 +23,7 @@ namespace Tests
 
             Picture picture = new Picture("test.jpg");
             picture.Bitmap = bitmap;
+            picture.ConvertedBitmap = bitmap;
 
             picture.ConvertPictureToGrayscale();
 
@@ -31,7 +32,8 @@ namespace Tests
             var avrage = (c.R + c.G + c.B) / 3;
             c = Color.FromArgb(avrage, avrage, avrage);
 
-            Assert.AreEqual(picture.Bitmap.GetPixel(0, 0), c);
+            Assert.AreEqual(picture.ConvertedBitmap.GetPixel(0, 0), c);
+            Assert.AreNotEqual(picture.ConvertedBitmap.GetPixel(0, 0), picture.Bitmap.GetPixel(0, 0));
 
         }
 
@@ -45,17 +47,18 @@ namespace Tests
 
             Picture picture = new Picture("test.jpg");
             picture.Bitmap = bitmap;
+            picture.ConvertedBitmap = bitmap;
 
             picture.ConvertPictureToNegative();
-
-            Color c2 = picture.Bitmap.GetPixel(0, 0);
 
             var r = 255 - c.R;
             var g = 255 - c.G;
             var b = 255 - c.B;
             c = Color.FromArgb(r, g, b);
 
-            Assert.AreEqual(picture.Bitmap.GetPixel(0, 0), c);
+            Assert.AreEqual(picture.ConvertedBitmap.GetPixel(0, 0), c);
+            Assert.AreNotEqual(picture.ConvertedBitmap.GetPixel(0, 0), picture.Bitmap.GetPixel(0, 0));
+
         }
         [Test]
         public void ConvertPictureToBlurred_TestIfConvertsToBlurred()
@@ -78,10 +81,12 @@ namespace Tests
 
             Picture picture = new Picture("test.jpg");
             picture.Bitmap = bitmap;
+            picture.ConvertedBitmap = bitmap;
 
             picture.ConvertPictureToBlurr();
 
-            Assert.AreEqual(Color.FromArgb(226,226,226), picture.Bitmap.GetPixel(1, 1));
+            Assert.AreEqual(Color.FromArgb(226,226,226), picture.ConvertedBitmap.GetPixel(1, 1));
+            Assert.AreNotEqual(picture.ConvertedBitmap.GetPixel(1, 1), picture.Bitmap.GetPixel(1, 1));
         }
     }
 }

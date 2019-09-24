@@ -10,34 +10,32 @@ namespace PictureManipulator
         public string PictureAdress { get; set; }
         public string PictureAdressCopy { get; set; }
         public Bitmap Bitmap { get; set; }
+        public Bitmap ConvertedBitmap { get; set; }
+        public Exception Exception { get; set; }
 
-        public Picture(string imageAdress)
+        public Picture(string pictureAdress)
         {
-            PictureAdress = imageAdress;
-            Bitmap image = null;
+            PictureAdress = pictureAdress;
             try
             {
-                image = new Bitmap(imageAdress, true);
+                Bitmap = new Bitmap(pictureAdress, true);
+                ConvertedBitmap = Bitmap;
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine(e.Message);
-                Console.WriteLine("No picture found");
+                Exception = e;
                 return;
             }
-            if ((image.Width < 1000) && (image.Height < 1000))
+            if (!(Bitmap.Width < 1000) && (Bitmap.Height < 1000))
             {
-                Bitmap = image;
-            }
-            else
-            {
+                
                 Bitmap = null;
-                Console.WriteLine("Image is too large");
             }
         }
 
         public void ConvertPictureToNegative()
         {
+            Bitmap tempBitmap = new Bitmap(Bitmap.Width, Bitmap.Height);
             int x, y;
             for (x = 0; x < Bitmap.Width; x++)
             {
@@ -48,16 +46,18 @@ namespace PictureManipulator
                     int g = 255 - pixel.G;
                     int b = 255 - pixel.B;
                     Color newPixel = Color.FromArgb(r, g, b);
-                    Bitmap.SetPixel(x, y, newPixel);
+                    tempBitmap.SetPixel(x, y, newPixel);
                 }
             }
             string[] pictureAdress = PictureAdress.Split('.');
             string newPictureName = pictureAdress[0] + "_negative." + pictureAdress[1];
             PictureAdressCopy = newPictureName;
+            ConvertedBitmap = tempBitmap;
         }
 
         public void ConvertPictureToGrayscale()
         {
+            Bitmap tempBitmap = new Bitmap(Bitmap.Width, Bitmap.Height);
             int x, y;
             for (x = 0; x < Bitmap.Width; x++)
             {
@@ -71,17 +71,18 @@ namespace PictureManipulator
                     int grayScaleValue = (r + g + b) / 3;
 
                     Color newPixel = Color.FromArgb(grayScaleValue, grayScaleValue, grayScaleValue);
-                    Bitmap.SetPixel(x, y, newPixel);
+                    tempBitmap.SetPixel(x, y, newPixel);
                 }
             }
             string[] pictureAdress = PictureAdress.Split('.');
             string newPictureName = pictureAdress[0] + "_grayscale." + pictureAdress[1];
             PictureAdressCopy = newPictureName;
+            ConvertedBitmap = tempBitmap;
         }
 
         public void ConvertPictureToBlurr()
         {
-            Bitmap tempBitmap = new Bitmap(Bitmap.Width,Bitmap.Height);
+            Bitmap tempBitmap = new Bitmap(Bitmap.Width, Bitmap.Height);
             int x, y;
             var pixels = new List<Color>();
             for (x = 0; x < Bitmap.Width; x++)
@@ -150,7 +151,20 @@ namespace PictureManipulator
             string[] pictureAdress = PictureAdress.Split('.');
             string newPictureAdress = pictureAdress[0] + "_blurred." + pictureAdress[1];
             PictureAdressCopy = newPictureAdress;
-            Bitmap = tempBitmap;
+            ConvertedBitmap = tempBitmap;
+        }
+
+        public void SavePicture()
+        {
+            try
+            {
+                ConvertedBitmap.Save(PictureAdressCopy);
+                ConvertedBitmap = Bitmap;
+            }
+            catch
+            {
+
+            }
         }
 
 
