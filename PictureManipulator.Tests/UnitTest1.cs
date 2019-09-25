@@ -2,6 +2,7 @@ using NUnit.Framework;
 using PictureManipulator;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 namespace Tests
 {
@@ -135,6 +136,17 @@ namespace Tests
             picture.ReadPictureFromFile("tooBigTest.jpg");
 
             Assert.IsNull(picture.Bitmap);
+        }
+        [Test]
+        public void SavePictureToFile_TestIfFileExtists()
+        {
+            Bitmap bitmap = new Bitmap(1, 1);
+            Picture picture = new Picture();
+            picture.PathOfCopy = "hej.jpg";
+            picture.ConvertedBitmap = bitmap;
+            picture.SavePictureFromFile();
+
+            Assert.IsTrue(File.Exists("hej.jpg"));
         }
     }
 }

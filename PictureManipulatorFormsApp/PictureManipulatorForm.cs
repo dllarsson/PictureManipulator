@@ -54,7 +54,7 @@ namespace PictureManipulatorFormsApp
                 picture.ConvertPictureToGrayscale();
                 pbConvertedPicture.Image = picture.ConvertedBitmap;
                 ConvertedPictureAdress = picture.PathOfCopy;
-
+                btnSave.Enabled = true;
             }
 
             else if (rbNegative.Checked)
@@ -63,6 +63,7 @@ namespace PictureManipulatorFormsApp
                 picture.ConvertPictureToNegative();
                 pbConvertedPicture.Image = picture.ConvertedBitmap;
                 ConvertedPictureAdress = picture.PathOfCopy;
+                btnSave.Enabled = true;
             }
 
             else if (rbBlurr.Checked)
@@ -71,8 +72,8 @@ namespace PictureManipulatorFormsApp
                 picture.ConvertPictureToBlurr();
                 pbConvertedPicture.Image = picture.ConvertedBitmap;
                 ConvertedPictureAdress = picture.PathOfCopy;
+                btnSave.Enabled = true;
             }
-            btnSave.Enabled = true;
         }
 
         private void BtnSave_Click(object sender, EventArgs e)
@@ -84,5 +85,7 @@ namespace PictureManipulatorFormsApp
                 pbConvertedPicture.Image.Save(saveFileDialog.FileName);
             }
         }
+
+        
     }
 }

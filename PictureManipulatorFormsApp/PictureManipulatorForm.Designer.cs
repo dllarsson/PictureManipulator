@@ -44,27 +44,27 @@
             // 
             // pbSourcePicture
             // 
-            this.pbSourcePicture.Location = new System.Drawing.Point(14, 114);
+            this.pbSourcePicture.Location = new System.Drawing.Point(12, 13);
             this.pbSourcePicture.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pbSourcePicture.Name = "pbSourcePicture";
-            this.pbSourcePicture.Size = new System.Drawing.Size(338, 375);
+            this.pbSourcePicture.Size = new System.Drawing.Size(470, 470);
             this.pbSourcePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbSourcePicture.TabIndex = 0;
             this.pbSourcePicture.TabStop = false;
             // 
             // pbConvertedPicture
             // 
-            this.pbConvertedPicture.Location = new System.Drawing.Point(549, 114);
+            this.pbConvertedPicture.Location = new System.Drawing.Point(627, 13);
             this.pbConvertedPicture.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pbConvertedPicture.Name = "pbConvertedPicture";
-            this.pbConvertedPicture.Size = new System.Drawing.Size(338, 375);
+            this.pbConvertedPicture.Size = new System.Drawing.Size(470, 470);
             this.pbConvertedPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbConvertedPicture.TabIndex = 1;
             this.pbConvertedPicture.TabStop = false;
             // 
             // btnImportPicture
             // 
-            this.btnImportPicture.Location = new System.Drawing.Point(124, 496);
+            this.btnImportPicture.Location = new System.Drawing.Point(169, 496);
             this.btnImportPicture.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnImportPicture.Name = "btnImportPicture";
             this.btnImportPicture.Size = new System.Drawing.Size(84, 29);
@@ -78,7 +78,7 @@
             this.rbGrayscale.AutoSize = true;
             this.rbGrayscale.CheckAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.rbGrayscale.Cursor = System.Windows.Forms.Cursors.Default;
-            this.rbGrayscale.Location = new System.Drawing.Point(359, 145);
+            this.rbGrayscale.Location = new System.Drawing.Point(505, 202);
             this.rbGrayscale.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbGrayscale.Name = "rbGrayscale";
             this.rbGrayscale.Size = new System.Drawing.Size(105, 24);
@@ -90,7 +90,7 @@
             // rbNegative
             // 
             this.rbNegative.AutoSize = true;
-            this.rbNegative.Location = new System.Drawing.Point(359, 179);
+            this.rbNegative.Location = new System.Drawing.Point(505, 236);
             this.rbNegative.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbNegative.Name = "rbNegative";
             this.rbNegative.Size = new System.Drawing.Size(96, 24);
@@ -102,7 +102,7 @@
             // rbBlurr
             // 
             this.rbBlurr.AutoSize = true;
-            this.rbBlurr.Location = new System.Drawing.Point(359, 212);
+            this.rbBlurr.Location = new System.Drawing.Point(505, 269);
             this.rbBlurr.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rbBlurr.Name = "rbBlurr";
             this.rbBlurr.Size = new System.Drawing.Size(67, 24);
@@ -113,7 +113,7 @@
             // 
             // btnConvert
             // 
-            this.btnConvert.Location = new System.Drawing.Point(359, 248);
+            this.btnConvert.Location = new System.Drawing.Point(505, 305);
             this.btnConvert.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnConvert.Name = "btnConvert";
             this.btnConvert.Size = new System.Drawing.Size(84, 29);
@@ -124,7 +124,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(690, 496);
+            this.btnSave.Location = new System.Drawing.Point(847, 496);
             this.btnSave.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(84, 29);
@@ -137,7 +137,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 562);
+            this.ClientSize = new System.Drawing.Size(1109, 548);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnConvert);
             this.Controls.Add(this.rbBlurr);
