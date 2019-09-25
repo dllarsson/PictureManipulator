@@ -14,16 +14,17 @@ namespace PictureManipulatorConsole
                 while (true)
                 {
                     Console.Write("Image path: ");
-                    string adress = Console.ReadLine();
-                    Picture picture = new Picture(adress);
+                    string path = Console.ReadLine();
+                    Picture picture = new Picture();
+                    picture.ReadPictureFromFile(path);
                     if (picture.Bitmap != null)
                     {
                         picture.ConvertPictureToNegative();
-                        picture.SavePicture();
+                        picture.SavePictureFromFile();
                         picture.ConvertPictureToGrayscale();
-                        picture.SavePicture();
+                        picture.SavePictureFromFile();
                         picture.ConvertPictureToBlurr();
-                        picture.SavePicture();
+                        picture.SavePictureFromFile();
                         break;
                     }
                     else
@@ -35,13 +36,23 @@ namespace PictureManipulatorConsole
             }
             else
             {
-                Picture picture = new Picture(args[0]);
-                picture.ConvertPictureToNegative();
-                picture.SavePicture();
-                picture.ConvertPictureToGrayscale();
-                picture.SavePicture();
-                picture.ConvertPictureToBlurr();
-                picture.SavePicture();
+                Picture picture = new Picture();
+                picture.ReadPictureFromFile(args[0]);
+                if (picture.Bitmap != null)
+                {
+                    picture.ReadPictureFromFile(args[0]);
+                    picture.ConvertPictureToNegative();
+                    picture.SavePictureFromFile();
+                    picture.ConvertPictureToGrayscale();
+                    picture.SavePictureFromFile();
+                    picture.ConvertPictureToBlurr();
+                    picture.SavePictureFromFile();
+                }
+                else
+                {
+                    Console.WriteLine(picture.ErrorMessage);
+                }
+
             }
         }
     }

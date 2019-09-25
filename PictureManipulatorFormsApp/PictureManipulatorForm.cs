@@ -13,7 +13,6 @@ namespace PictureManipulatorFormsApp
 {
     public partial class PictureManipulatorForm : Form
     {
-        public string PictureAdress { get; set; }
         public string ConvertedPictureAdress { get; set; }
         public PictureManipulatorForm()
         {
@@ -29,8 +28,8 @@ namespace PictureManipulatorFormsApp
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                PictureAdress = openFileDialog.FileName;
-                Picture picture = new Picture(PictureAdress);
+                Picture picture = new Picture();
+                picture.ReadPictureFromFile(openFileDialog.FileName);
                 pbSourcePicture.Image = picture.Bitmap;
                 if (picture.Bitmap != null)
                 {
@@ -48,31 +47,30 @@ namespace PictureManipulatorFormsApp
 
         private void BtnConvert_Click(object sender, EventArgs e)
         {
+            Picture picture = new Picture();
             if (rbGrayscale.Checked)
             {
-                Picture picture = new Picture(PictureAdress);
+                picture.ReadPictureFromFile(openFileDialog.FileName);
                 picture.ConvertPictureToGrayscale();
                 pbConvertedPicture.Image = picture.ConvertedBitmap;
-                ConvertedPictureAdress = picture.PictureAdressCopy;
+                ConvertedPictureAdress = picture.PathOfCopy;
 
             }
 
             else if (rbNegative.Checked)
             {
-                Picture picture = new Picture(PictureAdress);
+                picture.ReadPictureFromFile(openFileDialog.FileName);
                 picture.ConvertPictureToNegative();
                 pbConvertedPicture.Image = picture.ConvertedBitmap;
-                ConvertedPictureAdress = picture.PictureAdressCopy;
-
-
+                ConvertedPictureAdress = picture.PathOfCopy;
             }
 
             else if (rbBlurr.Checked)
             {
-                Picture picture = new Picture(PictureAdress);
+                picture.ReadPictureFromFile(openFileDialog.FileName);
                 picture.ConvertPictureToBlurr();
                 pbConvertedPicture.Image = picture.ConvertedBitmap;
-                ConvertedPictureAdress = picture.PictureAdressCopy;
+                ConvertedPictureAdress = picture.PathOfCopy;
             }
             btnSave.Enabled = true;
         }

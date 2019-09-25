@@ -7,30 +7,14 @@ namespace PictureManipulator
 {
     public class Picture
     {
-        public string PictureAdress { get; set; }
-        public string PictureAdressCopy { get; set; }
         public Bitmap Bitmap { get; set; }
         public Bitmap ConvertedBitmap { get; set; }
-        public String ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; }
+        public string Path { get; set; }
+        public string PathOfCopy { get; set; }
 
-        public Picture(string pictureAdress)
+        public Picture()
         {
-            PictureAdress = pictureAdress;
-            try
-            {
-                Bitmap = new Bitmap(pictureAdress, true);
-                ConvertedBitmap = Bitmap;
-            }
-            catch (ArgumentException e)
-            {
-                ErrorMessage = e.Message;
-                return;
-            }
-            if ((Bitmap.Width >= 1000) && (Bitmap.Height >= 1000))
-            {
-                ErrorMessage = "Image is too large. Max is 1000x1000px";
-                Bitmap = null;
-            }
         }
 
         public void ConvertPictureToNegative()
@@ -49,9 +33,9 @@ namespace PictureManipulator
                     tempBitmap.SetPixel(x, y, newPixel);
                 }
             }
-            string[] pictureAdress = PictureAdress.Split('.');
+            string[] pictureAdress = Path.Split('.');
             string newPictureName = pictureAdress[0] + "_negative." + pictureAdress[1];
-            PictureAdressCopy = newPictureName;
+            PathOfCopy = newPictureName;
             ConvertedBitmap = tempBitmap;
         }
 
@@ -74,9 +58,9 @@ namespace PictureManipulator
                     tempBitmap.SetPixel(x, y, newPixel);
                 }
             }
-            string[] pictureAdress = PictureAdress.Split('.');
+            string[] pictureAdress = Path.Split('.');
             string newPictureName = pictureAdress[0] + "_grayscale." + pictureAdress[1];
-            PictureAdressCopy = newPictureName;
+            PathOfCopy = newPictureName;
             ConvertedBitmap = tempBitmap;
         }
 
@@ -148,23 +132,49 @@ namespace PictureManipulator
                 }
             }
 
-            string[] pictureAdress = PictureAdress.Split('.');
+            string[] pictureAdress = Path.Split('.');
             string newPictureAdress = pictureAdress[0] + "_blurred." + pictureAdress[1];
-            PictureAdressCopy = newPictureAdress;
+            PathOfCopy = newPictureAdress;
             ConvertedBitmap = tempBitmap;
         }
 
-        public void SavePicture()
+        public void ReadPictureFromFile(string path)
         {
-            try
-            {
-                ConvertedBitmap.Save(PictureAdressCopy);
-                ConvertedBitmap = Bitmap;
-            }
-            catch
-            {
+            path.Trim();
+            path.ToLower();
+            string[] fileTypes = { "jpg", "png", "bmp", "jpeg" };
+            string[] pathSplitted = path.Split('.');
 
+            if (File.Exists(path))
+            {
+                foreach (var fileType in fileTypes)
+                {
+                    if (fileType == pathSplitted[pathSplitted.Length - 1])
+                    {
+                        Bitmap = new Bitmap(path);
+                        Path = path;
+                        if (Bitmap.Width > 1000 || Bitmap.Height > 1000)
+                        {
+                            Bitmap = null;
+                            ErrorMessage = "Image is too large. Max size is 1000x1000 pixels";
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        ErrorMessage = "Filetype is not accepted";
+                    }
+                }
             }
+            else
+            {
+                ErrorMessage = "File does not exist";
+            }
+        }
+        public void SavePictureFromFile()
+        {
+            ConvertedBitmap.Save(PathOfCopy);
+            ConvertedBitmap = Bitmap;
         }
 
 

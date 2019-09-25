@@ -21,13 +21,14 @@ namespace Tests
 
             bitmap.SetPixel(0, 0, c);
 
-            Picture picture = new Picture("test.jpg");
+            Picture picture = new Picture();
+            picture.Path = "test.jpg";
+
             picture.Bitmap = bitmap;
             picture.ConvertedBitmap = bitmap;
 
             picture.ConvertPictureToGrayscale();
 
-            Color c2 = picture.Bitmap.GetPixel(0, 0);
 
             var avrage = (c.R + c.G + c.B) / 3;
             c = Color.FromArgb(avrage, avrage, avrage);
@@ -45,7 +46,9 @@ namespace Tests
 
             bitmap.SetPixel(0, 0, c);
 
-            Picture picture = new Picture("test.jpg");
+            Picture picture = new Picture();
+            picture.Path = "test.jpg";
+
             picture.Bitmap = bitmap;
             picture.ConvertedBitmap = bitmap;
 
@@ -79,14 +82,59 @@ namespace Tests
                 }
             }
 
-            Picture picture = new Picture("test.jpg");
+            Picture picture = new Picture();
+            picture.Path = "test.jpg";
             picture.Bitmap = bitmap;
             picture.ConvertedBitmap = bitmap;
 
             picture.ConvertPictureToBlurr();
 
-            Assert.AreEqual(Color.FromArgb(226,226,226), picture.ConvertedBitmap.GetPixel(1, 1));
+            Assert.AreEqual(Color.FromArgb(226, 226, 226), picture.ConvertedBitmap.GetPixel(1, 1));
             Assert.AreNotEqual(picture.ConvertedBitmap.GetPixel(1, 1), picture.Bitmap.GetPixel(1, 1));
+        }
+
+        [Test]
+        public void ReadPictureFromFile_TestIfFileExists()
+        {
+            Bitmap bitmap = new Bitmap(1, 1);
+            bitmap.SetPixel(0, 0, Color.FromArgb(5, 5, 5));
+            bitmap.Save("hello.jpg");
+
+            Picture picture = new Picture();
+            picture.ReadPictureFromFile("hello.jpg");
+
+            Assert.IsNotNull(picture.Bitmap);
+
+        }
+        [Test]
+        public void ReadPictureFromFile_TestIfFileDoesNotExcist()
+        {
+            Picture picture = new Picture();
+            picture.ReadPictureFromFile("test.jpg");
+
+            Assert.IsNull(picture.Bitmap);
+        }
+        [Test]
+        public void ReadPictureFromFile_TestIfNotRightFileType()
+        {
+            Bitmap bitmap = new Bitmap(1, 1);
+            bitmap.Save("hello.abc");
+
+            Picture picture = new Picture();
+            picture.ReadPictureFromFile("hello.abc");
+
+            Assert.IsNull(picture.Bitmap);
+        }
+        [Test]
+        public void ReadPictureFromFile_TestIfPictureIsToBig()
+        {
+            Bitmap bitmap = new Bitmap(1001, 10);
+            bitmap.Save("tooBigTest.jpg");
+
+            Picture picture = new Picture();
+            picture.ReadPictureFromFile("tooBigTest.jpg");
+
+            Assert.IsNull(picture.Bitmap);
         }
     }
 }
