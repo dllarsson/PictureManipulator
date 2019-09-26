@@ -2,6 +2,7 @@
 using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Text;
 
 namespace PictureManipulator
 {
@@ -10,12 +11,9 @@ namespace PictureManipulator
         public Bitmap Bitmap { get; set; }
         public Bitmap ConvertedBitmap { get; set; }
         public string ErrorMessage { get; set; }
-        public string Path { get; set; }
+        public string PathOfOriginal { get; set; }
         public string PathOfCopy { get; set; }
-
-        public Picture()
-        {
-        }
+        public bool FileIsOk { get; set; }
 
         public void ConvertPictureToNegative()
         {
@@ -33,9 +31,11 @@ namespace PictureManipulator
                     tempBitmap.SetPixel(x, y, newPixel);
                 }
             }
-            string[] pictureAdress = Path.Split('.');
-            string newPictureName = pictureAdress[0] + "_negative." + pictureAdress[1];
-            PathOfCopy = newPictureName;
+
+
+            string newPath = GetNewPathName("_negative");
+
+            PathOfCopy = newPath;
             ConvertedBitmap = tempBitmap;
         }
 
@@ -58,9 +58,9 @@ namespace PictureManipulator
                     tempBitmap.SetPixel(x, y, newPixel);
                 }
             }
-            string[] pictureAdress = Path.Split('.');
-            string newPictureName = pictureAdress[0] + "_grayscale." + pictureAdress[1];
-            PathOfCopy = newPictureName;
+            string newPath = GetNewPathName("_grayscale");
+
+            PathOfCopy = newPath;
             ConvertedBitmap = tempBitmap;
         }
 
@@ -132,38 +132,32 @@ namespace PictureManipulator
                 }
             }
 
-            string[] pictureAdress = Path.Split('.');
-            string newPictureAdress = pictureAdress[0] + "_blurred." + pictureAdress[1];
-            PathOfCopy = newPictureAdress;
+            string newPath = GetNewPathName("_blurred");
+
+            PathOfCopy = newPath;
             ConvertedBitmap = tempBitmap;
         }
 
         public void ReadPictureFromFile(string path)
         {
-            path.Trim();
-            path.ToLower();
-            string[] fileTypes = { "jpg", "png", "bmp", "jpeg" };
-            string[] pathSplitted = path.Split('.');
-
             if (File.Exists(path))
             {
-                foreach (var fileType in fileTypes)
+                try
                 {
-                    if (fileType == pathSplitted[pathSplitted.Length - 1])
+                    Bitmap = new Bitmap(path);
+                    FileIsOk = true;
+                    PathOfOriginal = path;
+                    if (Bitmap.Width >= 1000 || Bitmap.Height >= 1000)
                     {
-                        Bitmap = new Bitmap(path);
-                        Path = path;
-                        if (Bitmap.Width > 1000 || Bitmap.Height > 1000)
-                        {
-                            Bitmap = null;
-                            ErrorMessage = "Image is too large. Max size is 1000x1000 pixels";
-                        }
-                        break;
+                        Bitmap = null;
+                        FileIsOk = false;
+                        ErrorMessage = "Image is too large. Max size is 1000x1000 pixels";
                     }
-                    else
-                    {
-                        ErrorMessage = "Filetype is not accepted";
-                    }
+                }
+                catch (ArgumentException e)
+                {
+                    FileIsOk = false;
+                    ErrorMessage = e.Message;
                 }
             }
             else
@@ -171,10 +165,24 @@ namespace PictureManipulator
                 ErrorMessage = "File does not exist";
             }
         }
+
         public void SavePictureFromFile()
         {
             ConvertedBitmap.Save(PathOfCopy);
             ConvertedBitmap = Bitmap;
+        }
+
+        public string GetNewPathName(string wordToExtendPathWith)
+        {
+
+            string extension = Path.GetExtension(PathOfOriginal);
+            string fileNameWithNoExtension = Path.GetFileNameWithoutExtension(PathOfOriginal);
+            string directory = Path.GetDirectoryName(PathOfOriginal);
+            string newFileName = fileNameWithNoExtension + wordToExtendPathWith + extension;
+
+            string newPathName = Path.Combine(directory, newFileName);
+
+            return newPathName;
         }
 
 

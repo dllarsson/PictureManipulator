@@ -17,7 +17,7 @@ namespace PictureManipulatorConsole
                     string path = Console.ReadLine();
                     Picture picture = new Picture();
                     picture.ReadPictureFromFile(path);
-                    if (picture.Bitmap != null)
+                    if (picture.FileIsOk)
                     {
                         picture.ConvertPictureToNegative();
                         picture.SavePictureFromFile();
@@ -30,6 +30,7 @@ namespace PictureManipulatorConsole
                     else
                     {
                         Console.WriteLine(picture.ErrorMessage);
+                        break;
                     }
 
                 }

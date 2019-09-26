@@ -8,34 +8,19 @@ namespace Tests
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-
-        }
-
         [Test]
         public void ConvertPictureToGrayscale_TestIfPictureColosAreInGrayscale()
         {
             Bitmap bitmap = new Bitmap(1, 1);
             Color c = Color.FromArgb(123, 189, 222);
-
             bitmap.SetPixel(0, 0, c);
-
             Picture picture = new Picture();
-            picture.Path = "test.jpg";
-
-            picture.Bitmap = bitmap;
+            picture.PathOfOriginal = "test.jpg";
             picture.ConvertedBitmap = bitmap;
-
+            picture.Bitmap = bitmap;
             picture.ConvertPictureToGrayscale();
 
-
-            var avrage = (c.R + c.G + c.B) / 3;
-            c = Color.FromArgb(avrage, avrage, avrage);
-
-            Assert.AreEqual(picture.ConvertedBitmap.GetPixel(0, 0), c);
-            Assert.AreNotEqual(picture.ConvertedBitmap.GetPixel(0, 0), picture.Bitmap.GetPixel(0, 0));
+            Assert.AreEqual(Color.FromArgb(178, 178, 178), picture.ConvertedBitmap.GetPixel(0, 0));
 
         }
 
@@ -44,24 +29,14 @@ namespace Tests
         {
             Bitmap bitmap = new Bitmap(1, 1);
             Color c = Color.FromArgb(123, 189, 222);
-
             bitmap.SetPixel(0, 0, c);
-
             Picture picture = new Picture();
-            picture.Path = "test.jpg";
-
-            picture.Bitmap = bitmap;
+            picture.PathOfOriginal = "test.jpg";
             picture.ConvertedBitmap = bitmap;
-
+            picture.Bitmap = bitmap;
             picture.ConvertPictureToNegative();
 
-            var r = 255 - c.R;
-            var g = 255 - c.G;
-            var b = 255 - c.B;
-            c = Color.FromArgb(r, g, b);
-
-            Assert.AreEqual(picture.ConvertedBitmap.GetPixel(0, 0), c);
-            Assert.AreNotEqual(picture.ConvertedBitmap.GetPixel(0, 0), picture.Bitmap.GetPixel(0, 0));
+            Assert.AreEqual(Color.FromArgb(132, 66, 33), picture.ConvertedBitmap.GetPixel(0, 0));
 
         }
         [Test]
@@ -84,7 +59,7 @@ namespace Tests
             }
 
             Picture picture = new Picture();
-            picture.Path = "test.jpg";
+            picture.PathOfOriginal = "test.jpg";
             picture.Bitmap = bitmap;
             picture.ConvertedBitmap = bitmap;
 
@@ -115,17 +90,7 @@ namespace Tests
 
             Assert.IsNull(picture.Bitmap);
         }
-        [Test]
-        public void ReadPictureFromFile_TestIfNotRightFileType()
-        {
-            Bitmap bitmap = new Bitmap(1, 1);
-            bitmap.Save("hello.abc");
 
-            Picture picture = new Picture();
-            picture.ReadPictureFromFile("hello.abc");
-
-            Assert.IsNull(picture.Bitmap);
-        }
         [Test]
         public void ReadPictureFromFile_TestIfPictureIsToBig()
         {
@@ -147,6 +112,18 @@ namespace Tests
             picture.SavePictureFromFile();
 
             Assert.IsTrue(File.Exists("hej.jpg"));
+        }
+
+        [Test]
+        public void GetNewPathName_TestIfSuffixIsIsAddedAsExpected()
+        {
+            string suffix = "_negative";
+            Picture picture = new Picture();
+            picture.PathOfOriginal = @"C:\Users\test\hello.jpg";
+
+            string newPathName = picture.GetNewPathName(suffix);
+
+            Assert.AreEqual(@"C:\Users\test\hello_negative.jpg", newPathName);
         }
     }
 }

@@ -24,14 +24,15 @@ namespace PictureManipulatorFormsApp
             rbBlurr.Enabled = false;
         }
 
+        Picture picture = new Picture();
         private void BtnImportPicture_Click(object sender, EventArgs e)
         {
+            picture.Bitmap = null;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Picture picture = new Picture();
                 picture.ReadPictureFromFile(openFileDialog.FileName);
                 pbSourcePicture.Image = picture.Bitmap;
-                if (picture.Bitmap != null)
+                if (picture.FileIsOk)
                 {
                     btnConvert.Enabled = true;
                     rbGrayscale.Enabled = true;
@@ -44,10 +45,10 @@ namespace PictureManipulatorFormsApp
                 }
             }
         }
-
         private void BtnConvert_Click(object sender, EventArgs e)
         {
             Picture picture = new Picture();
+
             if (rbGrayscale.Checked)
             {
                 picture.ReadPictureFromFile(openFileDialog.FileName);
@@ -86,6 +87,6 @@ namespace PictureManipulatorFormsApp
             }
         }
 
-        
+
     }
 }
