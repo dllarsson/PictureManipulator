@@ -39,7 +39,7 @@ namespace PictureManipulatorConsole
             {
                 Picture picture = new Picture();
                 picture.ReadPictureFromFile(args[0]);
-                if (picture.Bitmap != null)
+                if (picture.FileIsOk)
                 {
                     picture.ReadPictureFromFile(args[0]);
                     picture.ConvertPictureToNegative();
